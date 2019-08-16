@@ -3,15 +3,18 @@
            https://api.github.com/users/<your name>
 */
 
-axios.get( 'https://api.github.com/users/jtwray' )
-  .then(function (response) {
-    // handle success
-    console.log(response);
-  })
-  .catch(function (error) {
-    // handle error
+
+  
+  axios.get( 'https://api.github.com/users/jtwray' )
+  .then( ( response ) => {
+    const user=response.data;
+    console.log( response.data )
+    
+    return  githubUsersDiv.appendChild( createGithubUserCard( user ) )
+  } ).catch(function (error) {
+    
     console.log(error);
-  })
+  } )
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
