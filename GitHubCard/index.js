@@ -3,6 +3,15 @@
            https://api.github.com/users/<your name>
 */
 
+axios.get( 'https://api.github.com/users/jtwray' )
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -24,7 +33,90 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray=[];
+ const users={
+  "login": "jtwray",
+  "id": 42871401,
+  "node_id": "MDQ6VXNlcjQyODcxNDAx",
+  "avatar_url": "https://avatars2.githubusercontent.com/u/42871401?v=4",
+  "gravatar_id": "",
+  "url": "https://api.github.com/users/jtwray",
+  "html_url": "https://github.com/jtwray",
+  "followers_url": "https://api.github.com/users/jtwray/followers",
+  "following_url": "https://api.github.com/users/jtwray/following{/other_user}",
+  "gists_url": "https://api.github.com/users/jtwray/gists{/gist_id}",
+  "starred_url": "https://api.github.com/users/jtwray/starred{/owner}{/repo}",
+  "subscriptions_url": "https://api.github.com/users/jtwray/subscriptions",
+  "organizations_url": "https://api.github.com/users/jtwray/orgs",
+  "repos_url": "https://api.github.com/users/jtwray/repos",
+  "events_url": "https://api.github.com/users/jtwray/events{/privacy}",
+  "received_events_url": "https://api.github.com/users/jtwray/received_events",
+  "type": "User",
+  "site_admin": false,
+  "name": "James 'Tucker' Wray",
+  "company": null,
+  "blog": "",
+  "location": "asheville,nc",
+  "email": null,
+  "hireable": true,
+  "bio": "Unquenchable thirst for knowledge keeps me up@night.Intrigued by all things advancing the human race.Pay it forward.Help somebody if you can&DressSharpMyFriend!",
+  "public_repos": 77,
+  "public_gists": 1,
+  "followers": 2,
+  "following": 10,
+  "created_at": "2018-08-31T14:57:34Z",
+  "updated_at": "2019-08-13T01:10:30Z"
+}
+
+
+const createGithubUserCard=( user={})=> {
+  
+  const card=document.createElement( 'div' );
+  card.classList.add( 'card' );
+
+      const cardImage=document.createElement( 'img' )
+      cardImage.src=user.avatar_url
+    card.appendChild( cardImage );
+
+  const cardInfo=document.createElement( 'div' );
+  card.appendChild( cardInfo );
+  cardInfo.classList.add( 'card-info' );
+      const usersName=document.createElement( 'h3' );
+      usersName.textContent=user.name;
+    usersName.classList.add( 'name' );
+
+    cardInfo.appendChild( usersName );
+    const usersUserName=document.createElement( 'p' );
+      usersUserName.classList.add( 'username' );
+  usersUserName.textContent=user.login;
+  cardInfo.appendChild( usersUserName );
+  const userLocation=document.createElement( 'p' );
+  userLocation.textContent=`Location:${user.location}`;
+  cardInfo.appendChild( userLocation );
+
+  const profile=document.createElement( 'p' ); 
+  profile.textContent=`Profile:`
+      const githubPageAddress=document.createElement( 'a' );
+      githubPageAddress.href=user.url;
+      githubPageAddress.textContent=user.url;
+      cardInfo.appendChild( profile );
+  profile.appendChild(githubPageAddress)
+
+  const followers=document.createElement( 'p' );
+  followers.textContent=``
+    followers.textContent=`Followers:${user.followers}`;
+    cardInfo.appendChild( followers );
+    const following=document.createElement( 'p' );
+    following.textContent=`Following:${user.following}`
+    cardInfo.appendChild( following );
+    const bio=document.createElement( 'p' );
+  bio.textContent=`Bio:${user.bio}`
+  cardInfo.appendChild( bio );
+  return card;
+}
+
+const githubUsersDiv=document.querySelector( 'div.cards' );
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
